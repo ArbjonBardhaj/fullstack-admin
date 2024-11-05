@@ -1,0 +1,25 @@
+version: '2.28.1'
+services:
+ server:
+  build: ./server
+  ports: 
+   - 9000:9000
+  env_file: 
+   - ./server/.env
+  depends_on: 
+   - mongo
+ mongo:
+  image: mongo:latest
+  ports:
+   - "27017:27017"
+  volumes:
+   - mongo-data:/data/db
+ client:
+  build: ./client
+  ports:
+   - 3000:3000
+  env_file: ./client/.env.local 
+  stdin_open: true
+  tty: true  
+volumes:
+ mongo-data: 
